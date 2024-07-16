@@ -14,15 +14,20 @@ import { AppContextProvider } from "./contexts/State";
 import { useAppContext } from "./contexts/useAppContext";
 
 function App() {
-  return (  
+  return (
     <AppContextProvider>
-        <AppComponent />
+      <AppComponent />
     </AppContextProvider>
   );
 }
 
 function AppComponent() {
-  const {user, login} = useAppContext()
+  const { user, login, theme } = useAppContext();
+  useEffect(() => {
+    document.body.classList.remove("light", "dark");
+    document.body.classList.add(theme);
+    localStorage.setItem("theme", theme);
+  });
   useEffect(() => {
     async function getUserSessionData() {
       const response = await axios.get(
@@ -32,7 +37,7 @@ function AppComponent() {
         },
       );
       if (response.status === 200) {
-        login(response.data)
+        login(response.data);
       }
     }
     if (!user) {

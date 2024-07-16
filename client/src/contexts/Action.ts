@@ -27,6 +27,10 @@ export type DeleteEditorAction = {
   type: "DELETE_EDITOR";
 };
 
+export type ToggleThemeAction = {
+  type: "TOGGLE_THEME";
+};
+
 export type Action =
   | LoginAction
   | LogoutAction
@@ -34,3 +38,4 @@ export type Action =
   | UpdateEditorAction
   | DeleteBlogAction
   | DeleteEditorAction
+  | ToggleThemeAction;

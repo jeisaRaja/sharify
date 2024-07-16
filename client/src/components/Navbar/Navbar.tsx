@@ -8,10 +8,6 @@ const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const { user, theme, toggleTheme } = useAppContext();
 
-  const toggleThemeNavbar = () => {
-    toggleTheme();
-  };
-
   useEffect(() => {
     console.log(theme);
   }, [theme]);
@@ -66,13 +62,13 @@ const Navbar = () => {
               <div className="flex ml-auto w-[300px] justify-end gap-2">
                 <button
                   className="rounded-full border-2 border-gray-300 mt-4 w-32"
-                  onClick={() => toggleThemeNavbar()}
+                  onClick={() => toggleTheme()}
                 >
                   <i
-                    className={`fi fi-sr-moon-stars ${theme === "dark" ? "" : "hidden"}`}
+                    className={`fi fi-sr-moon-stars ${theme === "dark" ? "hidden" : ""}`}
                   ></i>
                   <i
-                    className={`fi fi-br-brightness ${theme === "dark" ? "hidden" : ""}`}
+                    className={`fi fi-br-brightness ${theme === "dark" ? "" : "hidden"}`}
                   ></i>
                 </button>
                 <a href="/signin" className="w-full">

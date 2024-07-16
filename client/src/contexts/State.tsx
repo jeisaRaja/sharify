@@ -44,6 +44,11 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, blog: null };
     case "DELETE_EDITOR":
       return { ...state, editor: null };
+    case "TOGGLE_THEME":
+      return {
+        ...state,
+        theme: state.theme === Theme.Dark ? Theme.Light : Theme.Dark,
+      };
   }
 }
 
@@ -62,14 +67,6 @@ function getTheme(): Theme {
   document.body.classList.remove(Theme.Light, Theme.Dark);
   document.body.classList.add(theme);
   return theme;
-}
-
-function toggleTheme() {
-  const currentTheme = getTheme();
-  const newTheme = currentTheme === Theme.Light ? Theme.Dark : Theme.Light;
-  localStorage.setItem("theme", newTheme);
-  document.body.classList.remove(Theme.Light, Theme.Dark);
-  document.body.classList.add(newTheme);
 }
 
 enum Theme {
@@ -94,11 +91,11 @@ const initialState: AppState = {
   blog: null,
   editor: null,
   theme: getTheme(),
-  toggleTheme: toggleTheme,
-  login: () => { },
-  logout: () => { },
-  updateBlog: () => { },
-  getUserSessionData: () => { },
+  toggleTheme: () => {},
+  login: () => {},
+  logout: () => {},
+  updateBlog: () => {},
+  getUserSessionData: () => {},
 };
 
 const useAppState = () => {
@@ -119,6 +116,8 @@ export const AppContextProvider: FC<AppContextProviderProps> = ({
   const login = (user: UserState) => {
     dispatch({ type: "LOGIN", payload: user });
   };
+
+  const toggleTheme = () => dispatch({ type: "TOGGLE_THEME" });
 
   const logout = async () => {
     try {
@@ -154,7 +153,14 @@ export const AppContextProvider: FC<AppContextProviderProps> = ({
 
   return (
     <AppContext.Provider
-      value={{ ...state, login, updateBlog, getUserSessionData, logout }}
+      value={{
+        ...state,
+        login,
+        updateBlog,
+        getUserSessionData,
+        logout,
+        toggleTheme,
+      }}
     >
       {children}
     </AppContext.Provider>

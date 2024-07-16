@@ -96,11 +96,11 @@ p a {
 }
 
 .dark {
-  background: #404040;
+  @apply bg-neutral-900;
   color: white;
 }
 
 .light {
+  @apply text-neutral-900;
   background: white;
-  color: black;
 }

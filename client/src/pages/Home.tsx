@@ -46,7 +46,7 @@ const Home = () => {
                     <div className="flex gap-2 mb-3">
                       {blog.tags.map((tag) => {
                         return (
-                          <div className="flex items-center bg-gray-200 opacity-70 rounded-full px-3 py-1" key={tag}>
+                          <div className="flex items-center bg-gray-200 opacity-70 rounded-full px-3 py-1 text-black" key={tag}>
                               {tag}
                           </div>
                         );

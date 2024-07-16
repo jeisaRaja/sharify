@@ -37,11 +37,11 @@ const BlogPage = () => {
       try {
         const res = await axios.get(api_uri, { withCredentials: true });
         if (res.status === 200) {
-          console.log(res)
+          console.log(res);
           setBlog(res.data.blog);
           setLike(res.data.like);
           setLikeCount(res.data.blog.activity?.total_likes || 0);
-          localStorage.setItem("visited_blogs",JSON.stringify(res.data.track))
+          localStorage.setItem("visited_blogs", JSON.stringify(res.data.track));
         }
       } catch (e) {
         console.log("should be redirected");
@@ -102,7 +102,7 @@ const BlogPage = () => {
               <div className="flex items-center gap-1">
                 <button
                   className={
-                    "w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 " +
+                    "w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 text-black " +
                     (like == true ? "text-red-600 bg-red-100" : "")
                   }
                   onClick={toggleLike}
@@ -113,7 +113,7 @@ const BlogPage = () => {
               </div>
               <div className="flex items-center gap-1">
                 <button
-                  className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100"
+                  className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 text-black"
                   onClick={toggleCommentModal}
                 >
                   <i className="fi fi-rs-comment-dots"></i>
