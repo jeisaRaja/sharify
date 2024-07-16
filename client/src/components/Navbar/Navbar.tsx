@@ -3,13 +3,21 @@ import Button from "../Input/Button";
 import MenuModal from "./MenuModal";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../contexts/useAppContext";
+
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
-  const {user} = useAppContext()
+  const { user, theme, toggleTheme } = useAppContext();
 
-  useEffect(()=>{
-    console.log(user)
-  }, [user])
+  const toggleThemeNavbar = () => {
+    toggleTheme();
+  };
+
+  useEffect(() => {
+    console.log(theme);
+  }, [theme]);
+
+  useEffect(() => { }, [user]);
+
   return (
     <>
       <header className="w-full max-w-[1200px] mx-auto px-12 h-[100px] flex items-center justify-between py-5">
@@ -55,13 +63,24 @@ const Navbar = () => {
                   Sharify
                 </Link>
               </div>
-              <div className="flex ml-auto w-[200px] justify-end gap-2">
-                <a href="/signin">
+              <div className="flex ml-auto w-[300px] justify-end gap-2">
+                <button
+                  className="rounded-full border-2 border-gray-300 mt-4 w-32"
+                  onClick={() => toggleThemeNavbar()}
+                >
+                  <i
+                    className={`fi fi-sr-moon-stars ${theme === "dark" ? "" : "hidden"}`}
+                  ></i>
+                  <i
+                    className={`fi fi-br-brightness ${theme === "dark" ? "hidden" : ""}`}
+                  ></i>
+                </button>
+                <a href="/signin" className="w-full">
                   <Button dark={true} type={undefined}>
                     Sign In
                   </Button>
                 </a>
-                <a href="/signup">
+                <a href="/signup" className="w-full">
                   <Button>Sign Up</Button>
                 </a>
               </div>

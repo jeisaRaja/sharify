@@ -22,7 +22,6 @@ function App() {
 }
 
 function AppComponent() {
-  //const auth = useUserContext();
   const {user, login} = useAppContext()
   useEffect(() => {
     async function getUserSessionData() {
@@ -33,7 +32,6 @@ function AppComponent() {
         },
       );
       if (response.status === 200) {
-        //auth.login(response.data);
         login(response.data)
       }
     }

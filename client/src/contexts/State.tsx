@@ -47,10 +47,42 @@ function reducer(state: AppState, action: Action): AppState {
   }
 }
 
+function getTheme(): Theme {
+  const value = localStorage.getItem("theme");
+  let theme: Theme;
+  if (value == "light") {
+    theme = Theme.Light;
+    localStorage.setItem("theme", "light");
+  } else if (value == "dark") {
+    theme = Theme.Dark;
+  } else {
+    theme = Theme.Light;
+    localStorage.setItem("theme", "light");
+  }
+  document.body.classList.remove(Theme.Light, Theme.Dark);
+  document.body.classList.add(theme);
+  return theme;
+}
+
+function toggleTheme() {
+  const currentTheme = getTheme();
+  const newTheme = currentTheme === Theme.Light ? Theme.Dark : Theme.Light;
+  localStorage.setItem("theme", newTheme);
+  document.body.classList.remove(Theme.Light, Theme.Dark);
+  document.body.classList.add(newTheme);
+}
+
+enum Theme {
+  Dark = "dark",
+  Light = "light",
+}
+
 type AppState = {
   user: UserState | null;
   blog: BlogState | null;
   editor: EditorState | null;
+  theme: Theme;
+  toggleTheme: () => void;
   login: (user: UserState) => void;
   logout: () => void;
   updateBlog: (blog: BlogState) => void;
@@ -61,10 +93,12 @@ const initialState: AppState = {
   user: null,
   blog: null,
   editor: null,
-  login: () => {},
-  logout: () => {},
-  updateBlog: () => {},
-  getUserSessionData: () => {},
+  theme: getTheme(),
+  toggleTheme: toggleTheme,
+  login: () => { },
+  logout: () => { },
+  updateBlog: () => { },
+  getUserSessionData: () => { },
 };
 
 const useAppState = () => {
@@ -82,7 +116,6 @@ export const AppContextProvider: FC<AppContextProviderProps> = ({
   children,
 }: AppContextProviderProps) => {
   const { state, dispatch } = useAppState();
-
   const login = (user: UserState) => {
     dispatch({ type: "LOGIN", payload: user });
   };
@@ -97,7 +130,7 @@ export const AppContextProvider: FC<AppContextProviderProps> = ({
         },
       );
       console.log(response);
-      dispatch({type:"LOGOUT"})
+      dispatch({ type: "LOGOUT" });
     } catch (error) {
       console.error("Error during logout:", error);
     }
